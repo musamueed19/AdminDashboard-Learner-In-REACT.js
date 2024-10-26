@@ -5,40 +5,26 @@ import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
 import { useNotificationProvider } from "@refinedev/antd";
 import "@refinedev/antd/dist/reset.css";
 
-import dataProvider, {
-  GraphQLClient,
-  liveProvider,
-} from "@refinedev/nestjs-query";
 import routerBindings, {
   DocumentTitleHandler,
   UnsavedChangesNotifier,
 } from "@refinedev/react-router-v6";
 import { App as AntdApp } from "antd";
-import { createClient } from "graphql-ws";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { authProvider } from "./authProvider";
-import { ColorModeContextProvider } from "./contexts/color-mode";
-
-const API_URL = "https://api.nestjs-query.refine.dev/graphql";
-const WS_URL = "wss://api.nestjs-query.refine.dev/graphql";
-
-const gqlClient = new GraphQLClient(API_URL);
-const wsClient = createClient({ url: WS_URL });
 
 function App() {
   return (
     <BrowserRouter>
       <GitHubBanner />
       <RefineKbarProvider>
-        <ColorModeContextProvider>
           <AntdApp>
             <DevtoolsProvider>
               <Refine
-                dataProvider={dataProvider(gqlClient)}
-                liveProvider={liveProvider(wsClient)}
+                // dataProvider={dataProvider(gqlClient)}
+                // liveProvider={liveProvider(wsClient)}
                 notificationProvider={useNotificationProvider}
                 routerProvider={routerBindings}
-                authProvider={authProvider}
+                // authProvider={}
                 options={{
                   syncWithLocation: true,
                   warnWhenUnsavedChanges: true,
@@ -57,10 +43,20 @@ function App() {
               <DevtoolsPanel />
             </DevtoolsProvider>
           </AntdApp>
-        </ColorModeContextProvider>
       </RefineKbarProvider>
     </BrowserRouter>
   );
 }
 
 export default App;
+
+
+{/*
+  Providers - are the Refine Building blocks - that you manage different aspects of the application, such as Data Fetching, Authentication,  Routing, Notifications, Real-time updates, and more.
+  1)  Data Provider - handles data fetching and caching
+  2)   Auth Provider - handles authentication and authorization
+  3)    Notification Provider - handles notifications
+  4)     Router Provider - handles routing
+
+
+*/}
